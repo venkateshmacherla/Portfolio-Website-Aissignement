@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./styles.css";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import SocialLinks from "./components/SocialLinks";
+import Footer from "./components/Footer";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import About from "./components/About";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleTheme = () => setDarkMode((prevMode) => !prevMode);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className={darkMode ? "dark-theme app-wrapper" : "app-wrapper"}>
+        <Navbar toggleTheme={toggleTheme} isDarkMode={darkMode} />
+        <SocialLinks />
+
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/about" element={<About isDarkMode={darkMode} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
